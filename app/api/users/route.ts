@@ -22,8 +22,8 @@ export async function POST(req: any) {
 
   try {
     const { data, error } = await supabase.from("users").insert(formdata);
-
-    if(formdata.usn){
+    let usn = formdata.usn
+    if(formdata.usn &&( usn[1]=='S' || usn[1]=='s') && (usn[2]=='i' || usn[2]=='I') ){
       const { data, error } = await supabase.from("sit").insert(formdata);
     }
 
