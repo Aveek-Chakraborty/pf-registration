@@ -21,11 +21,7 @@ export async function POST(req: any) {
 
 
   try {
-    const { data, error } = await supabase.from("users").insert(formdata);
-
-    if(formdata.usn){
-      const { data, error } = await supabase.from("sit").insert(formdata);
-    }
+    const { data, error } = await supabase.from("walk").insert(formdata);
 
     if (error) {
       console.error("Error saving form data:", error);
