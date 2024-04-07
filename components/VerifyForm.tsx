@@ -1,58 +1,76 @@
 "use client"
 import React, { useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
+import { set, useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { db } from '@/database/db';
 
-// Define the form schema using Zod
 const formSchema = z.object({
     name: z.string().min(2).max(50),
-    mobileNo: z.string().min(10).max(15),
-    uniqueCode: z.string().min(6),
+    mobile_no: z.string().min(10).max(15),
+    unique_code: z.string().min(6),
     email: z.string().email(),
-    // usn: z.string().min(10).max(10),
+    usn:z.string()
+
 });
 
 interface FormData {
     name: string;
-    mobileNo: string;
-    uniqueCode: string;
+    mobile_no: string;
+    unique_code: string;
     email: string;
     usn: string;
 }
 
-// Component
+
 export default function VerifyCodeForm() {
     const [isVerified, setIsVerified] = useState(false);
     const form = useForm({
         resolver: zodResolver(formSchema),
         defaultValues: {
             name: '',
-            mobileNo: '',
-            uniqueCode: '',
+            mobile_no: '',
+            unique_code: '',
             email: '',
             usn: '',
         },
     });
 
-    const onSubmit = (data: FormData) => {
-        // Verify unique code only when submit button is clicked
-        console.log(data);
-        const isCodeVerified = verifyCode(data.uniqueCode);
+    const onSubmit = async (data: FormData) => {
+
+        const isCodeVerified = verifyCode(data.unique_code);
+        console.log(data.email)
         if (isCodeVerified) {
             setIsVerified(true);
-            toast.success('Form submitted successfully');
-            console.log(data); // You can handle form submission here
-            } else {
+            try {
+                const response = await fetch('/api/users', {
+                    method: 'POST',
+                    body: JSON.stringify(data),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                const result = await response.json();
+                if (result.message === 'Data saved successfully') {
+                    toast.success('Form submitted successfully');
+                    // Handle successful submission (e.g., clear form, redirect)
+                } else {
+                    toast.error(result.message || 'An error occurred');
+                }
+            } catch (error) {
+                console.error('Error submitting form:', error);
+                toast.error('An error occurred. Please try again later.');
+            }
+        } else {
             setIsVerified(false);
             toast.error('Wrong unique code');
         }
+
     };
 
-    // Function to verify the unique code
+
     function verifyCode(code: string): boolean {
         if (code.length !== 6) {
             return false;
@@ -80,24 +98,24 @@ export default function VerifyCodeForm() {
                 <h2 className="text-4xl font-semibold mb-4 text-center ">Marathon 15.0 Registration</h2>
                 <form className="flex flex-col justify-center" onSubmit={form.handleSubmit(onSubmit)}>
                     <div className="mb-4">
-                        <label htmlFor="name" className="block text-gray-700 font-semibold mb-2">Name</label>
-                        <input type="text" id="name" name="name" className="form-input border w-full h-10 rounded-lg" {...form.register("name")} />
+                        <label htmlFor="name" className="block text-gray-700 font-semibold mb-2">Name <span className=' text-red-700'>*</span></label>
+                        <input type="text" id="name" name="name" required className="form-input border w-full h-10 rounded-lg" {...form.register("name")} />
                     </div>
                     <div className="mb-4">
-                        <label htmlFor="mobile" className="block text-gray-700 font-semibold mb-2 ">Mobile Number</label>
-                        <input type="text" id="mobile" name="mobile" className="form-input border w-full h-10 rounded-md"  {...form.register("mobileNo")} />
+                        <label htmlFor="mobile" className="block text-gray-700 font-semibold mb-2 ">Mobile Number <span className=' text-red-700'>*</span></label>
+                        <input type="text" id="mobile" name="mobile" required className="form-input border w-full h-10 rounded-md"  {...form.register("mobile_no")}  />
                     </div>
                     <div className="mb-4">
-                        <label htmlFor="code" className="block text-gray-700 font-semibold mb-2 ">Unique Code</label>
-                        <input type="text" id="code" name="code" className="form-input border w-full h-10 rounded-md"  {...form.register("uniqueCode")} />
+                        <label htmlFor="code" className="block text-gray-700 font-semibold mb-2 ">Unique Code <span className=' text-red-700'>*</span></label>
+                        <input type="text" id="code" name="code" required className="form-input border w-full h-10 rounded-md"  {...form.register("unique_code")}  />
                     </div>
                     <div className="mb-4">
-                        <label htmlFor="email" className="block text-gray-700 font-semibold mb-2">Email Address</label>
-                        <input type="email" id="email" name="email" className="form-input border w-full h-10 rounded-md"  {...form.register("email")} />
+                        <label htmlFor="email" className="block text-gray-700 font-semibold mb-2">Email Address<span className=' text-red-700'>*</span></label>
+                        <input type="email" id="email" name="email" required className="form-input border w-full h-10 rounded-md"  {...form.register("email")}  />
                     </div>
                     <div className="mb-4">
-                        <label htmlFor="usn" className="block text-gray-700 font-semibold mb-2">USN</label>
-                        <input type="text" id="usn" name="usn" className="form-input border w-full h-10 rounded-md" {...form.register("usn")} />
+                        <label htmlFor="usn" className="block text-gray-700 font-semibold mb-2">USN <span className=' text-gray-400'>(leave empty if dont have)</span></label>
+                        <input type="text" id="usn" name="usn"  className="form-input border w-full h-10 rounded-md" {...form.register("usn")}  />
                     </div>
                     <button type="submit" className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition duration-300 self-center">Submit</button>
                 </form>

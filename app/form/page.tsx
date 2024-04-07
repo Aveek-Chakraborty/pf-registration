@@ -5,7 +5,7 @@ import VerifyCodeForm from "@/components/VerifyForm";
 const page = () => {
   return (
     <div>
-      front page
+      <VerifyCodeForm />
     </div>
   )
 }
