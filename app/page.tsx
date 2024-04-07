@@ -1,6 +1,6 @@
 "use client"
 
-import VerifyCodeForm from "@/components/mf";
+import VerifyCodeForm from "@/components/VerifyForm";
 
 const page = () => {
   return (
