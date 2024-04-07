@@ -114,7 +114,7 @@ export default function Gform() {
                         <input type="email" id="email" name="email" required className="form-input border w-full h-10 rounded-md"  {...form.register("email")}  />
                     </div>
                     <div className="mb-4">
-                        <label htmlFor="usn" className="block text-gray-700 font-semibold mb-2">USN <span className=' text-gray-400'>(leave empty if dont have)</span></label>
+                        <label htmlFor="usn" className="block text-gray-700 font-semibold mb-2">USN <span className=' text-gray-400'>(Leave empty if don't have)</span></label>
                         <input type="text" id="usn" name="usn"  className="form-input border w-full h-10 rounded-md" {...form.register("usn")}  />
                     </div>
                     <button type="submit" className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition duration-300 self-center">Submit</button>
