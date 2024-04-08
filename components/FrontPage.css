@@ -1,0 +1,8 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.background {
+    @apply bg-[hsla(212,65%,34%,1)] bg-[radial-gradient(at_77%_94%,hsla(6,98%,78%,1)_0px,transparent_50%),radial-gradient(at_15%_92%,hsla(184,72%,65%,1)_0px,transparent_50%),radial-gradient(at_49%_37%,hsla(311,60%,79%,1)_0px,transparent_50%),radial-gradient(at_72%_8%,hsla(68,84%,74%,1)_0px,transparent_50%),radial-gradient(at_49%_5%,hsla(347,97%,70%,1)_0px,transparent_50%),radial-gradient(at_83%_49%,hsla(277,70%,63%,1)_0px,transparent_50%),radial-gradient(at_47%_57%,hsla(236,79%,64%,1)_0px,transparent_50%)];
+  }
+  
