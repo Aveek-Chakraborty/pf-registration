@@ -5,6 +5,7 @@ import { set, useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useRouter } from 'next/navigation';
 
 const formSchema = z.object({
     name: z.string().min(2).max(50),
@@ -26,6 +27,7 @@ interface FormData {
 
 export default function Gform() {
     const [isVerified, setIsVerified] = useState(false);
+    const router = useRouter();
     const form = useForm({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -54,8 +56,7 @@ export default function Gform() {
 
                 const result = await response.json();
                 if (result.message === 'Data saved successfully') {
-                    toast.success('Form submitted successfully');
-                    // Handle successful submission (e.g., clear form, redirect)
+                    router.push(`/${data.unique_code}`);
                 } else {
                     toast.error(result.message || 'An error occurred');
                 }

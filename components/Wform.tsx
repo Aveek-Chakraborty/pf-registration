@@ -5,6 +5,7 @@ import { set, useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useRouter } from 'next/navigation';
 
 const formSchema = z.object({
     name: z.string().min(2).max(50),
@@ -23,6 +24,7 @@ interface FormData {
 
 
 export default function Wform() {
+    const router = useRouter();
     const [isVerified, setIsVerified] = useState(false);
     const form = useForm({
         resolver: zodResolver(formSchema),
@@ -35,7 +37,6 @@ export default function Wform() {
     });
 
     const onSubmit = async (data: FormData) => {
-
         const isCodeVerified = verifyCode(data.unique_code);
         if (isCodeVerified) {
             setIsVerified(true);
@@ -50,8 +51,7 @@ export default function Wform() {
 
                 const result = await response.json();
                 if (result.message === 'Data saved successfully') {
-                    toast.success('Form submitted successfully');
-                    // Handle successful submission (e.g., clear form, redirect)
+                    router.push(`/${data.unique_code}`)
                 } else {
                     toast.error(result.message || 'An error occurred');
                 }

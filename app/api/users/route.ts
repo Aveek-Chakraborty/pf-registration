@@ -108,6 +108,7 @@ export async function POST(req: any) {
       formdata.qrcodedata = qrB64;
     }
     const { data, error } = await supabase.from("users").insert(formdata);
+    await supabase.from("master").insert(formdata);
     
     transporter.sendMail(mailOptions, function (error: any, info: any) {
       fs.unlinkSync(qrCodePath);

@@ -23,7 +23,6 @@ export async function POST(req: any) {
 
   const formdata = await req.json();
   try {
-    const { data, error } = await supabase.from("walk").insert(formdata);
 
     const qrData = `name:${formdata.name}-uc:${formdata.unique_code}`;
     const qrCodePath = `qrCode_${Date.now()}.png`; 
@@ -99,6 +98,14 @@ export async function POST(req: any) {
       ]
     };
 
+    if (qrCodePath) {
+      const qrBuffer = fs.readFileSync(qrCodePath);
+      const qrB64 = qrBuffer.toString("base64");
+      formdata.qrcodedata = qrB64;
+    }
+
+    const { data, error } = await supabase.from("walk").insert(formdata);
+    await supabase.from("master").insert(formdata);
 
     transporter.sendMail(mailOptions, function (error: any, info: any) {
       fs.unlinkSync(qrCodePath);
