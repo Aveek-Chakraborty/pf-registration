@@ -3,6 +3,10 @@ import { createClient } from "@supabase/supabase-js";
 import QRCode from "qrcode";
 import nodemailer from "nodemailer";
 import fs from "fs";
+import {db} from '@/database/db'
+import {master} from '@/database/schema'
+import { eq } from 'drizzle-orm';
+
 
 
 const supabaseUrl = process.env.S_URL || "";
@@ -134,4 +138,12 @@ export async function POST(req: any) {
     return NextResponse.json({ message: "Internal server error" });
   }
 
+}
+
+export async function GET(req:any){
+  const {id} = req.json()
+  console.log(id)
+  // const res = await db.select().from(master).where(eq(master.uniqueCode, id));
+
+  // console.log(res)
 }
