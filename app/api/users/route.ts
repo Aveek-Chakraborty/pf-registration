@@ -28,7 +28,7 @@ export async function POST(req: any) {
   const formdata = await req.json();
   try {
 
-    const qrData = `name:${formdata.name}-uc:${formdata.unique_code}`;
+    const qrData = `name: ${formdata.name} uc: ${formdata.unique_code} b`;
     const qrCodePath = `qrCode_${Date.now()}.png`;
     await QRCode.toFile(qrCodePath, qrData);
 
@@ -141,10 +141,3 @@ export async function POST(req: any) {
 
 }
 
-export async function GET(req:any){
-  const {id} = req.json()
-  console.log(id)
-  // const res = await db.select().from(master).where(eq(master.uniqueCode, id));
-
-  // console.log(res)
-}

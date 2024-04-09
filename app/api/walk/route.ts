@@ -24,7 +24,7 @@ export async function POST(req: any) {
   const formdata = await req.json();
   try {
 
-    const qrData = `name:${formdata.name}-uc:${formdata.unique_code}`;
+    const qrData = `name: ${formdata.name} uc: ${formdata.unique_code} w`;
     const qrCodePath = `qrCode_${Date.now()}.png`; 
     await QRCode.toFile(qrCodePath, qrData);
 
