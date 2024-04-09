@@ -95,7 +95,7 @@ export default function Gform() {
     return (
         <div className="h-screen max:h-screen-auto flex justify-center items-center bg-gradient-to-br from-orange-500/35 via-blue-300 to-purple-400/40">
             <div className="bg-white p-8 rounded-xl shadow-lg w-5/6 h-5/7">
-                <h2 className="text-4xl font-semibold mb-4 text-center ">Marathon 15.0 Registration</h2>
+                <h2 className="text-4xl font-semibold mb-4 text-center ">Marathon 15.0 Registration - Girls</h2>
                 <form className="flex flex-col justify-center" onSubmit={form.handleSubmit(onSubmit)}>
                     <div className="mb-4">
                         <label htmlFor="name" className="block text-gray-700 font-semibold mb-2">Name <span className=' text-red-700'>*</span></label>

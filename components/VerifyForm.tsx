@@ -6,6 +6,8 @@ import { z } from 'zod';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+import { useRouter } from 'next/navigation';
+
 const formSchema = z.object({
     name: z.string().min(2).max(50),
     mobile_no: z.string().min(10).max(15),
@@ -25,6 +27,7 @@ interface FormData {
 
 
 export default function VerifyCodeForm() {
+    const router = useRouter();
     const [isVerified, setIsVerified] = useState(false);
     const form = useForm({
         resolver: zodResolver(formSchema),
@@ -38,9 +41,9 @@ export default function VerifyCodeForm() {
     });
 
     const onSubmit = async (data: FormData) => {
-
+        
         const isCodeVerified = verifyCode(data.unique_code);
-        console.log(data.email)
+        
         if (isCodeVerified) {
             setIsVerified(true);
             try {
@@ -54,8 +57,8 @@ export default function VerifyCodeForm() {
 
                 const result = await response.json();
                 if (result.message === 'Data saved successfully') {
-                    toast.success('Form submitted successfully');
-                    // Handle successful submission (e.g., clear form, redirect)
+                    
+                    router.push(`/${data.unique_code}`)
                 } else {
                     toast.error(result.message || 'An error occurred');
                 }
@@ -67,6 +70,7 @@ export default function VerifyCodeForm() {
             setIsVerified(false);
             toast.error('Wrong unique code');
         }
+        
 
     };
 
@@ -95,7 +99,7 @@ export default function VerifyCodeForm() {
     return (
         <div className="h-screen max:h-screen-auto flex justify-center items-center bg-gradient-to-br from-orange-500/35 via-blue-300 to-purple-400/40">
             <div className="bg-white p-8 rounded-xl shadow-lg w-5/6 h-5/7">
-                <h2 className="text-4xl font-semibold mb-4 text-center ">Marathon 15.0 Registration</h2>
+                <h2 className="text-4xl font-semibold mb-4 text-center ">Marathon 15.0 Registration - Boy</h2>
                 <form className="flex flex-col justify-center" onSubmit={form.handleSubmit(onSubmit)}>
                     <div className="mb-4">
                         <label htmlFor="name" className="block text-gray-700 font-semibold mb-2">Name <span className=' text-red-700'>*</span></label>

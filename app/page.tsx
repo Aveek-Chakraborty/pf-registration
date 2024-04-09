@@ -1,12 +1,9 @@
 "use client"
 
-import VerifyCodeForm from "@/components/VerifyForm";
-
+import FrontPage from "@/components/FrontPage"
 const page = () => {
   return (
-    <div>
-      front page
-    </div>
+    <FrontPage />
   )
 }
 

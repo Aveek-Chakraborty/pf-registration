@@ -23,10 +23,9 @@ export async function POST(req: any) {
 
   const formdata = await req.json();
   try {
-    const { data, error } = await supabase.from("users").insert(formdata);
 
     const qrData = `name:${formdata.name}-uc:${formdata.unique_code}`;
-    const qrCodePath = `qrCode_${Date.now()}.png`; 
+    const qrCodePath = `qrCode_${Date.now()}.png`;
     await QRCode.toFile(qrCodePath, qrData);
 
     const transporter = nodemailer.createTransport({
@@ -93,13 +92,19 @@ export async function POST(req: any) {
       `,
       attachments: [
         {
-          filename: 'qrCode.png', 
-          path: qrCodePath 
+          filename: 'qrCode.png',
+          path: qrCodePath
         }
       ]
     };
 
-
+    if (qrCodePath) {
+      const qrBuffer = fs.readFileSync(qrCodePath);
+      const qrB64 = qrBuffer.toString("base64");
+      formdata.qrcodedata = qrB64;
+    }
+    const { data, error } = await supabase.from("users").insert(formdata);
+    
     transporter.sendMail(mailOptions, function (error: any, info: any) {
       fs.unlinkSync(qrCodePath);
       if (error) {
@@ -111,7 +116,7 @@ export async function POST(req: any) {
     });
 
 
-
+    
 
     let usn = formdata.usn
     if (formdata.usn && (usn[1] == 'S' || usn[1] == 's') && (usn[2] == 'i' || usn[2] == 'I')) {
