@@ -16,7 +16,7 @@ export default function SuccessPage({ params }: any) {
             } else {
                 setTimeout(() => {
                     setInvalidCode(true);
-                }, 1.5); 
+                }, 1500); 
             }
         };
         fetchData();
