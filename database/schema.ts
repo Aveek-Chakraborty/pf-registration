@@ -1,4 +1,5 @@
-import { pgTable, varchar } from "drizzle-orm/pg-core";
+import { time } from "console";
+import { pgTable, varchar, timestamp } from "drizzle-orm/pg-core";
 
 export const boys = pgTable('users', {
   name: varchar('name'),
@@ -44,5 +45,29 @@ export const master = pgTable("master",
     email: varchar('email'),
     usn: varchar('usn'),
     qrcodedata: varchar("qrcodedata")
+  }
+)
+
+export const boycross = pgTable("boycross",
+  {
+    name: varchar('name'),
+    uniqueCode: varchar('unique_code').primaryKey(),
+    time: timestamp('time')
+  }
+)
+
+export const girlcross = pgTable("girlcross",
+  {
+    name: varchar('name'),
+    uniqueCode: varchar('unique_code').primaryKey(),
+    time: timestamp('time')
+  }
+)
+
+export const walkcross = pgTable("walkcross",
+  {
+    name: varchar('name'),
+    uniqueCode: varchar('unique_code').primaryKey(),
+    time: timestamp('time')
   }
 )
