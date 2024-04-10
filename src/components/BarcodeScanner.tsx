@@ -6,7 +6,6 @@ import {
   FormatException,
   Result,
 } from "@zxing/library";
-import { useRouter } from "next/navigation";
 import { useEffect, useRef } from "react";
 
 interface BarcodeScannerComponentProps {
