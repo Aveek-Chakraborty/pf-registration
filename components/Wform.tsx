@@ -26,6 +26,7 @@ interface FormData {
 export default function Wform() {
     const router = useRouter();
     const [isVerified, setIsVerified] = useState(false);
+    const [isDisabled, setIsDisabled] = useState(false);
     const form = useForm({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -51,7 +52,8 @@ export default function Wform() {
 
                 const result = await response.json();
                 if (result.message === 'Data saved successfully') {
-                    router.push(`/${data.unique_code}`)
+                    router.push(`/${data.unique_code}`);
+                    setIsDisabled(true)
                 } else {
                     toast.error(result.message || 'An error occurred');
                 }
@@ -110,7 +112,8 @@ export default function Wform() {
                         <input type="email" id="email" name="email" required className="form-input border w-full h-10 rounded-md"  {...form.register("email")}  />
                     </div>
                     
-                    <button type="submit" className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition duration-300 self-center">Submit</button>
+                    {isDisabled && 
+                    <button type="submit" className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition duration-300 self-center">Submit</button>}
                 </form>
                 <ToastContainer />
             </div>

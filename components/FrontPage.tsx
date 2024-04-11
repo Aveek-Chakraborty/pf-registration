@@ -1,5 +1,5 @@
+"use client";
 import React from "react";
-// import "./FrontPage.css";
 import { useRouter } from "next/navigation";
 import pfLogo from "@/public/pf-white.png";
 import Image from "next/image";
