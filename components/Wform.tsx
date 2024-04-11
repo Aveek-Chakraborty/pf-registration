@@ -112,7 +112,7 @@ export default function Wform() {
                         <input type="email" id="email" name="email" required className="form-input border w-full h-10 rounded-md"  {...form.register("email")}  />
                     </div>
                     
-                    {isDisabled && 
+                    {!isDisabled && 
                     <button type="submit" className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition duration-300 self-center">Submit</button>}
                 </form>
                 <ToastContainer />
