@@ -1,9 +1,12 @@
+"use client"
+
 import React from 'react'
+import Boysparticipate from '@/components/Boysparticipate'
 
 const page = () => {
   return (
     <div>
-      admin
+      <Boysparticipate/>
     </div>
   )
 }

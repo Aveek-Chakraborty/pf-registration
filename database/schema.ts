@@ -1,4 +1,4 @@
-import { time } from "console";
+
 import { pgTable, varchar, timestamp } from "drizzle-orm/pg-core";
 
 export const boys = pgTable('users', {
