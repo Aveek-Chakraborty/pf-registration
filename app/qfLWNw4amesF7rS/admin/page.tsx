@@ -1,12 +1,12 @@
 "use client"
 
 import React from 'react'
-import Boysparticipate from '@/components/Boysparticipate'
+import Participate from '@/components/Participate'
 
 const page = () => {
   return (
     <div>
-      <Boysparticipate/>
+      <Participate/>
     </div>
   )
 }
