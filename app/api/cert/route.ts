@@ -3,7 +3,6 @@ import { createClient } from "@supabase/supabase-js";
 import { createCanvas, loadImage } from 'canvas';
 import nodemailer from "nodemailer";
 import PDFDocument from 'pdfkit';
-import fs from 'fs';
 
 const supabaseUrl = process.env.S_URL || "";
 const supabaseAnonKey = process.env.A_KEY || "";
