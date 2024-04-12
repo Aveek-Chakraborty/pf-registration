@@ -24,7 +24,11 @@ const CertificateButton = () => {
 
   return (
     <div>
-      <button onClick={handleClick} disabled={loading}>
+      <button
+        onClick={handleClick}
+        disabled={loading}
+        className="bg-blue-500 m-2 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline "
+      >
         {loading ? 'Sending...' : 'Send Boys Certificates'}
       </button>
       <p>{message}</p>

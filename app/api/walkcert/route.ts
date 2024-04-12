@@ -16,9 +16,10 @@ interface Participant {
 
 async function generateCertificate(participant: Participant): Promise<Buffer> {
     const pdfDoc = await PDFDocument.create();
-    const page = pdfDoc.addPage([800, 600]);
+    const page = pdfDoc.addPage([3508, 2456]);
 
-    const font = await pdfDoc.embedFont('Helvetica');
+    const font = await pdfDoc.embedFont('Helvetica-Bold');
+    const textWidth = font.widthOfTextAtSize(participant.name, 100);
 
     const pngImageBytes = fs.readFileSync('public/participate.png');
     const pngImage = await pdfDoc.embedPng(pngImageBytes);
@@ -26,14 +27,14 @@ async function generateCertificate(participant: Participant): Promise<Buffer> {
     page.drawImage(pngImage, {
         x: 0,
         y: 0,
-        width: 800,
-        height: 600,
+        width: 3508,
+        height: 2456,
     });
 
     page.drawText(participant.name, {
-        x: 400,
-        y: 300,
-        size: 36,
+        x: (page.getWidth() - textWidth)/2,
+        y: 1415,
+        size: 100,
         color: rgb(0, 0, 0),
         font,
     });

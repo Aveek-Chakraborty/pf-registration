@@ -14,13 +14,7 @@ const supabaseAnonKey = process.env.A_KEY || "";
 
 const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
-export const config = {
-  api: {
-    bodyParser: {
-      sizeLimit: '10mb',
-    },
-  },
-};
+
 
 export async function POST(req: any) {
 

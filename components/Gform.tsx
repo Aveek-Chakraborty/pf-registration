@@ -100,23 +100,23 @@ export default function Gform() {
                 <form className="flex flex-col justify-center" onSubmit={form.handleSubmit(onSubmit)}>
                     <div className="mb-4">
                         <label htmlFor="name" className="block text-gray-700 font-semibold mb-2">Name <span className=' text-red-700'>*</span></label>
-                        <input type="text" id="name" name="name" required className="form-input border w-full h-10 rounded-lg" {...form.register("name")} />
+                        <input type="text" id="name"  {...form.register("name")} required className="form-input border w-full h-10 rounded-lg" />
                     </div>
                     <div className="mb-4">
                         <label htmlFor="mobile" className="block text-gray-700 font-semibold mb-2 ">Mobile Number <span className=' text-red-700'>*</span></label>
-                        <input type="text" id="mobile" name="mobile" required className="form-input border w-full h-10 rounded-md"  {...form.register("mobile_no")}  />
+                        <input type="text" id="mobile" {...form.register("mobile_no")}  required className="form-input border w-full h-10 rounded-md"   />
                     </div>
                     <div className="mb-4">
                         <label htmlFor="code" className="block text-gray-700 font-semibold mb-2 ">Unique Code <span className=' text-red-700'>*</span></label>
-                        <input type="text" id="code" name="code" required className="form-input border w-full h-10 rounded-md"  {...form.register("unique_code")}  />
+                        <input type="text" id="code"  {...form.register("unique_code")}  required className="form-input border w-full h-10 rounded-md"   />
                     </div>
                     <div className="mb-4">
                         <label htmlFor="email" className="block text-gray-700 font-semibold mb-2">Email Address<span className=' text-red-700'>*</span></label>
-                        <input type="email" id="email" name="email" required className="form-input border w-full h-10 rounded-md"  {...form.register("email")}  />
+                        <input type="email" id="email"  {...form.register("email")}  required className="form-input border w-full h-10 rounded-md"    />
                     </div>
                     <div className="mb-4">
                         <label htmlFor="usn" className="block text-gray-700 font-semibold mb-2">USN <span className=' text-gray-400'>(Leave empty if don't have)</span></label>
-                        <input type="text" id="usn" name="usn"  className="form-input border w-full h-10 rounded-md" {...form.register("usn")}  />
+                        <input type="text" id="usn"  {...form.register("usn")}   className="form-input border w-full h-10 rounded-md"   />
                     </div>
                     <button type="submit" className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition duration-300 self-center">Submit</button>
                 </form>
