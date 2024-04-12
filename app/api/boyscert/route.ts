@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
 import nodemailer from "nodemailer";
 import { PDFDocument, rgb } from "pdf-lib";
-import fs from "fs";
+import { participationCertB64 } from "@/utils/image";
 
 const supabaseUrl = process.env.NEXT_PUBLIC_S_URL || "";
 const supabaseAnonKey = process.env.NEXT_PUBLIC_A_KEY || "";
@@ -14,15 +14,17 @@ interface Participant {
   email: string;
 }
 
+// Base64 encoded string of the participate.png image
+const participateImageBase64 = participationCertB64;
+
 async function generateCertificate(participant: Participant): Promise<Buffer> {
   const pdfDoc = await PDFDocument.create();
   const page = pdfDoc.addPage([3508, 2456]);
 
   const font = await pdfDoc.embedFont("Helvetica-Bold");
-  const textWidth = font.widthOfTextAtSize(participant.name, 100) ;
+  const textWidth = font.widthOfTextAtSize(participant.name, 100);
 
-  const pngImageBytes = fs.readFileSync("public/participate.png");
-  const pngImage = await pdfDoc.embedPng(pngImageBytes);
+  const pngImage = await pdfDoc.embedPng(Buffer.from(participateImageBase64, "base64"));
 
   page.drawImage(pngImage, {
     x: 0,
@@ -67,7 +69,7 @@ export async function GET() {
         from: process.env.NEXT_PUBLIC_GMAIL,
         to: participant.email,
         subject: "Certificate",
-        text: `Dear ${participant.name},\n\nPlease find attached your certificate.\n\nBest regards,\nPathfinder`,
+        text: `Dear ${participant.name},\n\nPlease find attached your certificate.\n\nBest regards,\nTeam Pathfinder`,
         attachments: [
           {
             filename: "certificate.pdf",
