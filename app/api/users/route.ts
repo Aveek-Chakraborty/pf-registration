@@ -27,7 +27,7 @@ export async function POST(req: any) {
     });
 
     const mailOptions = {
-      from: 'pfmarathon15.0@gmail.com',
+      from: process.env.NEXT_PUBLIC_GMAIL,
       to: formdata.email,
       subject: 'Thank You for Participating!',
       html: `

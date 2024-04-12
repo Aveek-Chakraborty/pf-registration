@@ -2,38 +2,34 @@ import { NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
 import QRCode from "qrcode";
 import nodemailer from "nodemailer";
-import fs from "fs";
-
 
 const supabaseUrl = process.env.NEXT_PUBLIC_S_URL || "";
 const supabaseAnonKey = process.env.NEXT_PUBLIC_A_KEY || "";
 
 const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
-
 export async function POST(req: any) {
-
-
   const formdata = await req.json();
-  try {
 
+  try {
     const qrData = `name: ${formdata.name} uc: ${formdata.unique_code} w`;
-    const qrCodePath = `qrCode_${Date.now()}.png`; 
-    await QRCode.toFile(qrCodePath, qrData);
+
+    // Generate QR code as a data URL
+    const qrDataURL = await QRCode.toDataURL(qrData);
+    formdata.qrcodedata = qrDataURL.split(";base64,").pop();
 
     const transporter = nodemailer.createTransport({
-      service: 'Gmail',
+      service: "Gmail",
       auth: {
-        user: process.env.NEXT_PUBLIC_GMAIL_WALK || '',
-        pass: process.env.NEXT_PUBLIC_GMAIL_WALK_P || ''
-      }
+        user: process.env.NEXT_PUBLIC_GMAIL_WALK || "",
+        pass: process.env.NEXT_PUBLIC_GMAIL_WALK_P || "",
+      },
     });
 
-
     const mailOptions = {
-      from: 'pfmarathon15.0walkathon@gmail.com',
+      from: process.env.NEXT_PUBLIC_GMAIL_WALK ,
       to: formdata.email,
-      subject: 'Thank You for Participating!',
+      subject: "Thank You for Participating!",
       html: `
         <html>
           <head>
@@ -85,23 +81,17 @@ export async function POST(req: any) {
       `,
       attachments: [
         {
-          filename: 'qrCode.png', 
-          path: qrCodePath 
-        }
-      ]
+          filename: "qrCode.png",
+          content: qrDataURL.split(";base64,").pop(), // Extract base64 data
+          encoding: "base64",
+        },
+      ],
     };
-
-    if (qrCodePath) {
-      const qrBuffer = fs.readFileSync(qrCodePath);
-      const qrB64 = qrBuffer.toString("base64");
-      formdata.qrcodedata = qrB64;
-    }
 
     const { data, error } = await supabase.from("walk").insert(formdata);
     await supabase.from("master").insert(formdata);
 
     transporter.sendMail(mailOptions, function (error: any, info: any) {
-      fs.unlinkSync(qrCodePath);
       if (error) {
         console.error("Error sending email:", error);
         return NextResponse.json({ message: "Error sending email" });
@@ -109,6 +99,7 @@ export async function POST(req: any) {
         console.log("Email sent:", info.response);
       }
     });
+
 
     if (error) {
       console.error("Error saving form data:", error);
@@ -118,7 +109,6 @@ export async function POST(req: any) {
     return NextResponse.json({ message: "Data saved successfully", data });
   } catch (err) {
     console.error("Unexpected error:", err);
-    return NextResponse.json({ message: "Internal server error" });
+    return NextResponse.json({ message: err });
   }
-
 }
