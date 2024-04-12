@@ -4,6 +4,7 @@ import React from 'react'
 import Participate from '@/components/Participate'
 import Girlsparticipate from '@/components/Girlsparticipate'
 import Walkparticipate from '@/components/Walkparticipate'
+import Qrscanner from '@/components/Qrscanner'
 
 const page = () => {
   return (
@@ -11,6 +12,7 @@ const page = () => {
       <Participate/>
       <Girlsparticipate/>
       <Walkparticipate/>
+      <Qrscanner/>
     </div>
   )
 }
