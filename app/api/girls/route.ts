@@ -30,14 +30,14 @@ export async function POST(req: any) {
     const transporter = nodemailer.createTransport({
       service: 'Gmail',
       auth: {
-        user: process.env.GMAIL || '',
-        pass: process.env.GMAIL_P || ''
+        user: process.env.GMAIL_GIRLS || '',
+        pass: process.env.GMAIL_GIRLS_P || ''
       }
     });
 
 
     const mailOptions = {
-      from: 'pfmarathon15.0@gmail.com',
+      from: 'pfmarathon15.0.girls@gmail.com',
       to: formdata.email,
       subject: 'Thank You for Participating!',
       html: `

@@ -9,7 +9,7 @@ const CertificateButton = () => {
   const handleClick = async () => {
     try {
       setLoading(true);
-      const response = await fetch('/api/boyscert');
+      const response = await fetch('/api/girlscert');
       const data = await response.json();
       if (data.message !== 'Emails sent successfully!') {
         throw new Error('Error sending emails');
@@ -25,7 +25,7 @@ const CertificateButton = () => {
   return (
     <div>
       <button onClick={handleClick} disabled={loading}>
-        {loading ? 'Sending...' : 'Send Boys Certificates'}
+        {loading ? 'Sending...' : 'Send Girls Certificates'}
       </button>
       <p>{message}</p>
     </div>

@@ -44,7 +44,7 @@ async function generateCertificate(participant: Participant): Promise<Buffer> {
 
 export async function GET() {
     try {
-        const { data: participants, error } = await supabase.from('master').select('name, email');
+        const { data: participants, error } = await supabase.from('girls').select('name, email');
         if (error) {
             throw error;
         }
@@ -52,8 +52,8 @@ export async function GET() {
         const transporter = nodemailer.createTransport({
             service: 'gmail',
             auth: {
-                user: process.env.GMAIL,
-                pass: process.env.GMAIL_P,
+                user: process.env.GMAIL_GIRLS,
+                pass: process.env.GMAIL_GIRLS_P,
             },
         });
 
@@ -61,7 +61,7 @@ export async function GET() {
             const certificatePDF = await generateCertificate(participant);
 
             await transporter.sendMail({
-                from: process.env.GMAIL,
+                from: process.env.GMAIL_GIRLS,
                 to: participant.email,
                 subject: 'Certificate',
                 text: `Dear ${participant.name},\n\nPlease find attached your certificate.\n\nBest regards,\nPathfinder`,
