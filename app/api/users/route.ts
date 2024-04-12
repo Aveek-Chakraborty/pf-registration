@@ -128,9 +128,9 @@ export async function POST(req: any) {
     }
 
     return NextResponse.json({ message: "Data saved successfully", data });
-  } catch (err) {
+  } catch (err:any) {
     console.error("Unexpected error:", err);
-    return NextResponse.json({ message: "Internal server error" });
+    return NextResponse.json({ message: err });
   }
 
 }
