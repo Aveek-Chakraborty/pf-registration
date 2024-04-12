@@ -5,8 +5,8 @@ import nodemailer from "nodemailer";
 import fs from "fs";
 
 
-const supabaseUrl = process.env.S_URL || "";
-const supabaseAnonKey = process.env.A_KEY || "";
+const supabaseUrl = process.env.NEXT_PUBLIC_S_URL || "";
+const supabaseAnonKey = process.env.NEXT_PUBLIC_A_KEY || "";
 
 const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
@@ -24,8 +24,8 @@ export async function POST(req: any) {
     const transporter = nodemailer.createTransport({
       service: 'Gmail',
       auth: {
-        user: process.env.GMAIL_WALK || '',
-        pass: process.env.GMAIL_WALK_P || ''
+        user: process.env.NEXT_PUBLIC_GMAIL_WALK || '',
+        pass: process.env.NEXT_PUBLIC_GMAIL_WALK_P || ''
       }
     });
 

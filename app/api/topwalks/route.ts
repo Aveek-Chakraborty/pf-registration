@@ -3,8 +3,8 @@ import { createClient } from "@supabase/supabase-js";
 
 
 
-const supabaseUrl = process.env.S_URL || "";
-const supabaseAnonKey = process.env.A_KEY || "";
+const supabaseUrl = process.env.NEXT_PUBLIC_S_URL || "";
+const supabaseAnonKey = process.env.NEXT_PUBLIC_A_KEY || "";
 
 const supabase = createClient(supabaseUrl, supabaseAnonKey);
 

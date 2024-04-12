@@ -4,8 +4,8 @@ import nodemailer from "nodemailer";
 import { PDFDocument, rgb } from "pdf-lib";
 import fs from "fs";
 
-const supabaseUrl = process.env.S_URL || "";
-const supabaseAnonKey = process.env.A_KEY || "";
+const supabaseUrl = process.env.NEXT_PUBLIC_S_URL || "";
+const supabaseAnonKey = process.env.NEXT_PUBLIC_A_KEY || "";
 
 const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
@@ -55,8 +55,8 @@ export async function GET() {
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
-        user: process.env.GMAIL,
-        pass: process.env.GMAIL_P,
+        user: process.env.NEXT_PUBLIC_GMAIL,
+        pass: process.env.NEXT_PUBLIC_GMAIL_P,
       },
     });
 
@@ -64,7 +64,7 @@ export async function GET() {
       const certificatePDF = await generateCertificate(participant);
 
       await transporter.sendMail({
-        from: process.env.GMAIL,
+        from: process.env.NEXT_PUBLIC_GMAIL,
         to: participant.email,
         subject: "Certificate",
         text: `Dear ${participant.name},\n\nPlease find attached your certificate.\n\nBest regards,\nPathfinder`,

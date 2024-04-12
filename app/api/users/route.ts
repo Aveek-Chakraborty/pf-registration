@@ -3,14 +3,12 @@ import { createClient } from "@supabase/supabase-js";
 import QRCode from "qrcode";
 import nodemailer from "nodemailer";
 import fs from "fs";
-import {db} from '@/database/db'
-import {master} from '@/database/schema'
-import { eq } from 'drizzle-orm';
 
 
 
-const supabaseUrl = process.env.S_URL || "";
-const supabaseAnonKey = process.env.A_KEY || "";
+
+const supabaseUrl = process.env.NEXT_PUBLIC_S_URL || "";
+const supabaseAnonKey = process.env.NEXT_PUBLIC_A_KEY || "";
 
 const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
@@ -29,8 +27,8 @@ export async function POST(req: any) {
     const transporter = nodemailer.createTransport({
       service: 'Gmail',
       auth: {
-        user: process.env.GMAIL || '',
-        pass: process.env.GMAIL_P || ''
+        user: process.env.NEXT_PUBLIC_GMAIL || '',
+        pass: process.env.NEXT_PUBLIC_GMAIL_P || ''
       }
     });
 
@@ -128,7 +126,7 @@ export async function POST(req: any) {
     }
 
     return NextResponse.json({ message: "Data saved successfully", data });
-  } catch (err:any) {
+  } catch (err) {
     console.error("Unexpected error:", err);
     return NextResponse.json({ message: err });
   }
