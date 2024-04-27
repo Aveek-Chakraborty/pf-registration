@@ -35,34 +35,40 @@ const SITStudents: React.FC = () => {
   };
 
   return (
-    <div className="bg-gray-100 p-4 rounded-lg shadow-md relative m-3 w-1/2">
-      <h1 className="text-xl font-bold mb-4">SIT Students</h1>
+    <div className="bg-gray-100 p-4 rounded-lg shadow-md relative m-3 w-1/2 ">
+      <div className='flex justify-between'>
+        <h1 className="text-xl font-bold mb-4">Sit Students Data</h1>
+        {showData && (
+          <button onClick={handleClose} className=" bg-red-500 text-white px-2 py-1 rounded-md ">
+          Close
+        </button>
+        )}
+      </div>
       {!showData && (
-        <button
-          onClick={fetchData}
-          disabled={loading}
-          className="bg-blue-500 text-white px-4 py-2 rounded-md"
-        >
-          {loading ? "Loading..." : "Fetch Data"}
+        <button onClick={fetchData} disabled={loading} className="bg-blue-500 text-white px-4 py-2 rounded-md">
+          {loading ? 'Loading...' : 'Fetch Data'}
         </button>
       )}
       {error && <div className="text-red-500 mb-4">Error: {error}</div>}
       {showData && (
-        <div>
-          <ul>
-            {data.map((item, index) => (
-              <li key={index} className="mb-2">
-                <strong>Name:</strong> {item.name}, <strong>USN:</strong>{" "}
-                {item.usn}
-              </li>
-            ))}
-          </ul>
-          <button
-            onClick={handleClose}
-            className="absolute bottom-2 right-2 bg-red-500 text-white px-2 py-1 rounded-md"
-          >
-            Close
-          </button>
+        <div className="table-container mt-3">
+          <table className="table-auto w-full border border-collapse">
+            <thead>
+              <tr className="bg-gray-200 text-left">
+                <th className="px-4 py-2">Name</th>
+                <th className="px-4 py-2">USN</th>
+              </tr>
+            </thead>
+            <tbody>
+              {data.map((item, index) => (
+                <tr key={index}>
+                  <td className="px-4 py-2 border-b border-gray-200">{item.name}</td>
+                  <td className="px-4 py-2 border-b border-gray-200">{item.usn}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          
         </div>
       )}
     </div>
