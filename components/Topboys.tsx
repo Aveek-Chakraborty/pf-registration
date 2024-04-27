@@ -146,7 +146,7 @@ const BoysCrossComponent: React.FC = () => {
   };
 
   return (
-    <div className="bg-gray-100 p-4 rounded-lg shadow-md relative m-3 w-1/2 ">
+    <div className="bg-gray-100 p-4 rounded-lg shadow-md relative m-3 w-96 ">
       <div className='flex justify-between'>
         <h1 className="text-xl font-bold mb-4">Boyscross Data</h1>
         {showData && (

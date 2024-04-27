@@ -12,7 +12,8 @@ import SITStudents from "@/components/SITStudents";
 
 const page = () => {
   return (
-    <div className=" h-screen flex flex-col justify-center items-center bg-gradient-to-br from-orange-500/35 via-blue-300 to-purple-400/40">
+    <div className="bg-gradient-to-br from-orange-500/35 via-blue-300 to-purple-400/40 py-20 ">
+    <div className="flex flex-col justify-center items-center">
       {/* <Participate /> */}
       {/* <Girlsparticipate /> */}
       {/* <Walkparticipate /> */}
@@ -21,7 +22,7 @@ const page = () => {
       <Topgirls />
       <Topwalks />
       <SITStudents />
-    </div>
+    </div></div>
   );
 };
 
