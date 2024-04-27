@@ -150,6 +150,11 @@ const BoysCrossComponent: React.FC = () => {
       <div className='flex justify-between'>
         <h1 className="text-xl font-bold mb-4">Boyscross Data</h1>
         {showData && (
+        <button onClick={() => { generatePDF(data) }} disabled={loading} className="bg-green-500 text-white ml-3 px-4 py-2 rounded-md">
+          {loading ? 'generating...' : 'Generate PDF'}
+        </button>
+      )}
+        {showData && (
           <button onClick={handleClose} className=" bg-red-500 text-white px-2 py-1 rounded-md ">
             Close
           </button>
@@ -160,11 +165,7 @@ const BoysCrossComponent: React.FC = () => {
           {loading ? 'Loading...' : 'Fetch Data'}
         </button>
       )}
-      {!showData && (
-        <button onClick={() => { generatePDF(data) }} disabled={loading} className="bg-green-500 text-white ml-3 px-4 py-2 rounded-md">
-          {loading ? 'generating...' : 'Generate PDF'}
-        </button>
-      )}
+      
       {error && <div className="text-red-500 mb-4">Error: {error}</div>}
       {showData && (
         <div className="table-container mt-3">
