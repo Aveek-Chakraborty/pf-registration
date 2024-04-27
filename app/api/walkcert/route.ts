@@ -1,5 +1,5 @@
 export const dynamic = "force-dynamic"
-export const revalidate = 0 
+export const revalidate = 0
 export const fetchCache = "only-no-store"
 
 import { NextResponse } from "next/server";
@@ -7,9 +7,11 @@ import { createClient } from "@supabase/supabase-js";
 import nodemailer from "nodemailer";
 import { PDFDocument, rgb } from 'pdf-lib';
 import fs from 'fs';
+import dotenv from "dotenv"
+dotenv.config({ path: ".env" })
 
-const supabaseUrl = process.env.NEXT_PUBLIC_S_URL || "";
-const supabaseAnonKey = process.env.NEXT_PUBLIC_A_KEY || "";
+const supabaseUrl = process.env.S_URL || "";
+const supabaseAnonKey = process.env.A_KEY || "";
 
 const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
@@ -36,7 +38,7 @@ async function generateCertificate(participant: Participant): Promise<Buffer> {
     });
 
     page.drawText(participant.name, {
-        x: (page.getWidth() - textWidth)/2,
+        x: (page.getWidth() - textWidth) / 2,
         y: 1415,
         size: 100,
         color: rgb(0, 0, 0),
@@ -57,8 +59,8 @@ export async function GET() {
         const transporter = nodemailer.createTransport({
             service: 'gmail',
             auth: {
-                user: process.env.NEXT_PUBLIC_GMAIL_WALK,
-                pass: process.env.NEXT_PUBLIC_GMAIL_WALK_P,
+                user: process.env.GMAIL_WALK,
+                pass: process.env.GMAIL_WALK_P,
             },
         });
 
@@ -66,7 +68,7 @@ export async function GET() {
             const certificatePDF = await generateCertificate(participant);
 
             await transporter.sendMail({
-                from: process.env.NEXT_PUBLIC_GMAIL_WALK,
+                from: process.env.GMAIL_WALK,
                 to: participant.email,
                 subject: 'Certificate',
                 text: `Dear ${participant.name},\n\nPlease find attached your certificate.\n\nBest regards,\nPathfinder`,
@@ -81,7 +83,7 @@ export async function GET() {
 
         console.log('Emails sent successfully!');
         return NextResponse.json({ message: 'Emails sent successfully!' });
-    } catch (error:any) {
+    } catch (error: any) {
         console.error('Error sending emails:', error.message);
         return NextResponse.json({ error: 'Internal server error' });
     }

@@ -12,10 +12,10 @@ import SITStudents from "@/components/SITStudents";
 
 const page = () => {
   return (
-    <div className=" flex flex-col justify-center items-center bg-gradient-to-br from-orange-500/35 via-blue-300 to-purple-400/40">
-      <Participate />
-      <Girlsparticipate />
-      <Walkparticipate />
+    <div className=" h-screen flex flex-col justify-center items-center bg-gradient-to-br from-orange-500/35 via-blue-300 to-purple-400/40">
+      {/* <Participate /> */}
+      {/* <Girlsparticipate /> */}
+      {/* <Walkparticipate /> */}
       <Qrscanner />
       <Topboys />
       <Topgirls />

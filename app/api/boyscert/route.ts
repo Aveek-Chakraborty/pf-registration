@@ -1,5 +1,5 @@
 export const dynamic = "force-dynamic"
-export const revalidate = 0 
+export const revalidate = 0
 export const fetchCache = "only-no-store"
 export const maxDuration = 10
 
@@ -10,8 +10,11 @@ import nodemailer from "nodemailer";
 import { PDFDocument, rgb } from "pdf-lib";
 import { participationCertB64 } from "@/utils/image";
 
-const supabaseUrl = process.env.NEXT_PUBLIC_S_URL || "";
-const supabaseAnonKey = process.env.NEXT_PUBLIC_A_KEY || "";
+import dotenv from "dotenv"
+dotenv.config({ path: ".env" })
+
+const supabaseUrl = process.env.S_URL || "";
+const supabaseAnonKey = process.env.A_KEY || "";
 
 const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
@@ -63,8 +66,8 @@ export async function GET() {
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
-        user: process.env.NEXT_PUBLIC_GMAIL,
-        pass: process.env.NEXT_PUBLIC_GMAIL_P,
+        user: process.env.GMAIL,
+        pass: process.env.GMAIL_P,
       },
     });
 
@@ -72,7 +75,7 @@ export async function GET() {
       const certificatePDF = await generateCertificate(participant);
 
       await transporter.sendMail({
-        from: process.env.NEXT_PUBLIC_GMAIL,
+        from: process.env.GMAIL,
         to: participant.email,
         subject: "Certificate",
         text: `Dear ${participant.name},\n\nPlease find attached your certificate.\n\nBest regards,\nTeam Pathfinder`,

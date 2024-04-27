@@ -1,37 +1,39 @@
 export const dynamic = "force-dynamic"
-export const revalidate = 0 
+export const revalidate = 0
 export const fetchCache = "only-no-store"
 
 import { NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
 import QRCode from "qrcode";
+import dotenv from "dotenv"
+dotenv.config({ path: ".env" })
 import nodemailer from "nodemailer";
 
-const supabaseUrl = process.env.NEXT_PUBLIC_S_URL || "";
-const supabaseAnonKey = process.env.NEXT_PUBLIC_A_KEY || "";
+const supabaseUrl = process.env.S_URL || "";
+const supabaseAnonKey = process.env.A_KEY || "";
 
 const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 export async function POST(req: any) {
   const formdata = await req.json();
-  
+
   try {
     const qrData = `name: ${formdata.name} uc: ${formdata.unique_code} b`;
-    
+
     // Generate QR code as a data URL
     const qrDataURL = await QRCode.toDataURL(qrData);
     formdata.qrcodedata = qrDataURL.split(';base64,').pop();
-    
+
     const transporter = nodemailer.createTransport({
       service: 'Gmail',
       auth: {
-        user: process.env.NEXT_PUBLIC_GMAIL || '',
-        pass: process.env.NEXT_PUBLIC_GMAIL_P || ''
+        user: process.env.GMAIL || '',
+        pass: process.env.GMAIL_P || ''
       }
     });
 
     const mailOptions = {
-      from: process.env.NEXT_PUBLIC_GMAIL,
+      from: process.env.GMAIL,
       to: formdata.email,
       subject: 'Thank You for Participating!',
       html: `
@@ -94,7 +96,7 @@ export async function POST(req: any) {
 
     const { data, error } = await supabase.from("users").insert(formdata);
     await supabase.from("master").insert(formdata);
-    
+
     transporter.sendMail(mailOptions, function (error: any, info: any) {
       if (error) {
         console.error("Error sending email:", error);
