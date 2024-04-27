@@ -71,3 +71,11 @@ export const walkcross = pgTable("walkcross",
     time: timestamp('time')
   }
 )
+
+export const cross = pgTable("cross",
+  {
+    name: varchar('name'),
+    uniqueCode: varchar('unique_code').primaryKey(),
+    time: timestamp('time')
+  }
+)
