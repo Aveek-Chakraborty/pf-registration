@@ -1,5 +1,5 @@
 export const dynamic = "force-dynamic"
-export const revalidate = 0 
+export const revalidate = 0
 export const fetchCache = "only-no-store"
 
 import { NextResponse } from "next/server";
@@ -38,7 +38,7 @@ async function generateCertificate(participant: Participant): Promise<Buffer> {
     });
 
     page.drawText(participant.name, {
-        x: (page.getWidth() - textWidth)/2,
+        x: (page.getWidth() - textWidth) / 2,
         y: 1415,
         size: 100,
         color: rgb(0, 0, 0),
@@ -83,7 +83,7 @@ export async function GET() {
 
         console.log('Emails sent successfully!');
         return NextResponse.json({ message: 'Emails sent successfully!' });
-    } catch (error:any) {
+    } catch (error: any) {
         console.error('Error sending emails:', error.message);
         return NextResponse.json({ error: 'Internal server error' });
     }

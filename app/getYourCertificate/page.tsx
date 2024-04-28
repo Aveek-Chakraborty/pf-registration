@@ -1,8 +1,10 @@
 "use client"
 import React, { useState, ChangeEvent, FormEvent, use, useEffect } from 'react';
-import { PDFDocument, StandardFonts, rgb } from "pdf-lib";
+import { PDFDocument, PDFImage, StandardFonts, rgb } from "pdf-lib";
 import { toast, ToastContainer } from "react-toastify";
+import axios from "axios"
 import "react-toastify/dist/ReactToastify.css";
+
 
 const Page: React.FC = () => {
     const [code, setCode] = useState<string>('');
@@ -14,10 +16,11 @@ const Page: React.FC = () => {
 
     useEffect(() => {
         const fetchImg = async () => {
-
-            const certUrl = process.env.CERT as string;
-            const certBuffer = await fetch(certUrl).then((img) => img.arrayBuffer());
-            setPdfBytes(certBuffer);
+            const certUrl = process.env.NEXT_PUBLIC_CERT_URL as string;
+            console.log(certUrl)
+            const certBuffer = await fetch(certUrl).then(img => img.arrayBuffer())
+            console.log(certBuffer)
+            setPdfBytes(certBuffer)
         }
 
         fetchImg();
@@ -59,20 +62,24 @@ const Page: React.FC = () => {
         const page = pdfDoc.addPage([3508, 2456]);
 
         const font = await pdfDoc.embedFont(StandardFonts.TimesRomanBoldItalic);
-        const textWidth = font.widthOfTextAtSize(data, 100);
+        const fontSize = 100;
+        page.setFont(font);
 
-        const pngImage = await pdfDoc.embedPng(certBytes as ArrayBuffer);
+        const textWidth = font.widthOfTextAtSize(data, fontSize);
+        const { width, height } = page.getSize();
 
-        page.drawImage(pngImage, {
+
+        const certImage = await pdfDoc.embedPng(certBytes as ArrayBuffer);
+        page.drawImage(certImage, {
             x: 0,
             y: 0,
-            width: 3508,
             height: 2456,
+            width: 3508,
         });
 
         page.drawText(data, {
             x: (page.getWidth() - textWidth) / 2,
-            y: 1420,
+            y: 1415,
             size: 100,
             color: rgb(0, 0, 0),
             font,
