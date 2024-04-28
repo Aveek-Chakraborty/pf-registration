@@ -2,7 +2,6 @@
 import React, { useState, ChangeEvent, FormEvent, use, useEffect } from 'react';
 import { PDFDocument, PDFImage, StandardFonts, rgb } from "pdf-lib";
 import { toast, ToastContainer } from "react-toastify";
-import axios from "axios"
 import "react-toastify/dist/ReactToastify.css";
 
 
@@ -46,7 +45,7 @@ const Page: React.FC = () => {
             if (codee.data.length > 0) {
                 setName(codee.data[0].name);
                 setShowData(true);
-                toast.success('Match found successfully!!');
+                // toast.success('Match found successfully!!');
             } else {
                 console.error('Error sending data to the backend');
                 toast.error("Match not found of unique code");
