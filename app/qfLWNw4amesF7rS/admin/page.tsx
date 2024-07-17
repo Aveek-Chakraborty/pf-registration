@@ -14,9 +14,9 @@ const page = () => {
   return (
     <div className="bg-gradient-to-br from-orange-500/35 via-blue-300 to-purple-400/40 py-20 ">
     <div className="flex flex-col justify-center items-center">
-      {/* <Participate /> */}
-      {/* <Girlsparticipate /> */}
-      {/* <Walkparticipate /> */}
+      <Participate />
+      <Girlsparticipate />
+      <Walkparticipate />
       <Qrscanner />
       <Topboys />
       <Topgirls />
