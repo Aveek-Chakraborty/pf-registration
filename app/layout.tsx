@@ -11,7 +11,7 @@ const fontSans = FontSans({
 
 export const metadata: Metadata = {
   title: "Marathon 15.0 - Pathfinder",
-  description: "Generated for saving Pathfinder's ass",
+  description: "Generated for Pathfinder",
 };
 
 export const dynamic = "force-dynamic"
